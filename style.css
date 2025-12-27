@@ -1,0 +1,415 @@
+/* --- GLOBAL & BODY --- */
+body {
+  background: #17171C;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  overflow: hidden; 
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* Custom Scrollbar for the whole App */
+::-webkit-scrollbar {
+  width: 6px;
+}
+::-webkit-scrollbar-track {
+  background: #17171C;
+}
+::-webkit-scrollbar-thumb {
+  background: #333;
+  border-radius: 10px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: pink;
+}
+
+/* --- HEADER & NAVIGATION --- */
+.TopHeader {
+  background: #25252b;
+  display: flex;
+  width: 100%;
+  height: 60px;
+  justify-content: center;
+  align-items: center;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  flex-shrink: 0;
+  border-bottom: 1px solid #333;
+  cursor: pointer;
+}
+
+.TopHeader p {
+  color: pink;
+  font-weight: bold;
+  font-size: 18px;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  margin: 0;
+  text-shadow: 0 0 10px rgba(255, 192, 203, 0.5);
+  transition: text-shadow 0.3s ease;
+}
+
+.TopHeader:hover p {
+  text-shadow: 0 0 10px rgba(255, 192, 203, 1.0);
+}
+
+.sub-nav {
+  display: flex;
+  background: #1e1e24; 
+  border-bottom: 2px solid pink;
+  align-items: stretch;
+  flex-shrink: 0;
+  overflow-x: auto;
+  white-space: nowrap;
+  scrollbar-width: none; 
+}
+
+.sub-nav::-webkit-scrollbar { display: none; }
+
+.nav-items {
+  color: #888;
+  padding: 15px 25px;
+  cursor: pointer;
+  font-weight: bold;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  transition: all 0.2s ease;
+  border-bottom: 3px solid transparent;
+  display: flex;
+  align-items: center;
+}
+
+.nav-items:hover {
+  color: #ccc;
+}
+
+.active {
+  color: pink !important;
+  background: rgba(255, 192, 203, 0.1);
+  border-bottom: 3px solid pink;
+  text-shadow: 0 0 8px rgba(255, 192, 203, 0.3);
+}
+
+/* --- MAIN DISPLAY --- */
+.background {
+  flex-grow: 1;
+  padding: 30px;
+  display: grid;
+  grid-template-columns: repeat(5, 1fr); 
+  gap: 15px;
+  overflow-y: auto;
+  background: radial-gradient(circle at center, #1e1e24 0%, #111116 100%);
+  align-content: start;
+}
+
+/* --- SNAPPY CARDS --- */
+@keyframes sectorEntry {
+  from { opacity: 0; transform: translateY(10px); } 
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.card {
+  background: #25252b;
+  border: 1px solid #333;
+  border-radius: 12px;
+  height: 420px; 
+  position: relative;
+  overflow: hidden;
+  transition: transform 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275), border-color 0.2s ease;
+  cursor: pointer;
+  animation: sectorEntry 0.3s ease-out forwards;
+}
+
+.card:hover {
+  transform: scale(1.02); 
+  border-color: pink;
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.8), 0 0 10px rgba(255, 192, 203, 0.2);
+  z-index: 10;
+}
+
+.card-img {
+  width: 100%;
+  height: 100%;
+  background: #1a1a1f; 
+  background-size: cover;
+  background-position: center top;
+  filter: brightness(0.8);
+  transition: all 0.4s ease;
+}
+
+.card:hover .card-img {
+  filter: brightness(1.0);
+  transform: scale(1.1);
+}
+
+.card-overlay {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  padding: 25px 15px;
+  background: linear-gradient(to top, rgba(0,0,0,0.9) 20%, transparent 100%);
+  color: white;
+  pointer-events: none;
+}
+
+.card-name {
+  font-size: 1rem;
+  margin: 0;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  font-weight: 800;
+}
+
+.card-role {
+  color: pink;
+  font-size: 0.65rem;
+  font-weight: bold;
+  margin-bottom: 4px;
+  text-transform: uppercase;
+}
+
+/* --- SYSTEM STATUS --- */
+.status-container {
+  color: white;
+  grid-column: 1 / -1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 60vh;
+}
+
+.status-icon {
+  width: 60px; 
+  height: 60px; 
+  border: 3px solid #333;
+  border-top: 3px solid pink;
+  border-radius: 50%;
+  margin-bottom: 25px;
+  animation: spin 0.8s linear infinite; 
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+/* --- INFO OVERLAY & MODAL --- */
+.info-overlay {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  background: rgba(0, 0, 0, 0.85);
+  backdrop-filter: blur(8px);
+  z-index: 2000;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  animation: staticFade 0.3s ease-out;
+}
+
+@keyframes staticFade {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.info-content {
+  background: #1a1a1f;
+  border: 1px solid #333;
+  width: 90%;
+  max-width: 800px;
+  max-height: 85vh; /* Reduced slightly to ensure it fits screen */
+  border-radius: 16px;
+  position: relative;
+  display: flex;
+  flex-direction: column; /* Stack header and body */
+  padding: 30px;
+  box-shadow: 0 0 50px rgba(0,0,0,1);
+  overflow: hidden; /* Critical: Header won't scroll, only info-body will */
+}
+
+/* Scrollable body inside modal - FIXED */
+.info-body {
+  flex-grow: 1;
+  overflow-y: auto;
+  padding-right: 15px;
+  margin-top: 10px;
+}
+
+/* --- FLEXIBLE COLLAPSIBLES --- */
+details {
+  background: #25252b;
+  margin-bottom: 12px;
+  border-radius: 8px;
+  border: 1px solid #333;
+  transition: all 0.3s ease;
+}
+
+details[open] {
+  border-color: pink;
+  background: #2a2a32;
+  box-shadow: 0 0 15px rgba(255, 192, 203, 0.05);
+}
+
+summary {
+  padding: 18px 20px;
+  list-style: none;
+  cursor: pointer;
+  font-weight: bold;
+  font-size: 0.85rem;
+  letter-spacing: 2px;
+  color: #aaa;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  text-transform: uppercase;
+}
+
+summary::-webkit-details-marker { display: none; }
+
+summary:hover {
+  color: pink;
+}
+
+summary::after {
+  content: '▶';
+  font-size: 0.7rem;
+  color: #555;
+  transition: transform 0.3s ease, color 0.3s ease;
+}
+
+details[open] summary::after {
+  transform: rotate(90deg);
+  color: pink;
+}
+
+details[open] summary {
+  color: pink;
+  border-bottom: 1px solid rgba(255, 192, 203, 0.1);
+}
+
+.details-content {
+  padding: 20px;
+  color: #bbb;
+  line-height: 1.7;
+  font-family: 'Courier New', monospace;
+  font-size: 0.95rem;
+  animation: sectorEntry 0.3s ease-out;
+}
+
+.details-content p {
+    white-space: pre-line; /* Helps with line breaks */
+    margin: 0;
+    padding-left: 5px;
+}
+
+/* --- INFO HEADER --- */
+.info-header {
+  display: flex;
+  gap: 25px;
+  margin-bottom: 20px;
+  align-items: center;
+  flex-shrink: 0; /* Header won't shrink or scroll */
+}
+
+.info-img {
+  width: 80px; /* Reduced for better fit */
+  height: 80px;
+  border-radius: 50%; 
+  border: 2px solid pink;
+  background-size: cover;
+  background-position: center;
+  flex-shrink: 0;
+}
+
+.info-title h1 {
+  color: white;
+  margin: 0;
+  font-size: 1.6rem;
+  letter-spacing: 2px;
+}
+
+.tag {
+  color: pink;
+  font-size: 0.8rem;
+  font-weight: bold;
+  text-transform: uppercase;
+  opacity: 0.8;
+  margin: 4px 0 0 0;
+}
+
+.close-btn {
+  position: absolute;
+  top: 20px; right: 20px;
+  background: #333;
+  border: none;
+  color: white;
+  padding: 8px 15px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 0.7rem;
+  font-weight: bold;
+  letter-spacing: 1px;
+  transition: background 0.2s;
+  z-index: 10;
+}
+
+.close-btn:hover {
+  background: pink;
+  color: black;
+}
+
+/* --- VISUAL DATABASE SECTOR --- */
+.visual-database {
+    margin-bottom: 20px;
+    background: rgba(0, 0, 0, 0.3);
+    border: 1px dashed #444;
+    padding: 15px;
+    border-radius: 8px;
+}
+
+.section-label {
+    font-family: 'Courier New', monospace;
+    font-size: 0.7rem;
+    color: pink;
+    margin-bottom: 10px;
+    letter-spacing: 2px;
+}
+
+.horizontal-gallery {
+    display: flex;
+    gap: 15px;
+    overflow-x: auto;
+    padding-bottom: 10px;
+}
+
+.gallery-item {
+    flex: 0 0 auto;
+    height: 300px; /* Fixed height so it fits in the modal scroll area */
+}
+
+.gallery-item img {
+    height: 100%;
+    width: auto;
+    border-radius: 4px;
+    border: 1px solid #333;
+    transition: transform 0.3s ease;
+}
+
+.gallery-item img:hover {
+    transform: scale(1.02);
+    border-color: pink;
+}
+
+/* Fix for nested stat grids */
+.grid-stats {
+    display: grid; 
+    grid-template-columns: 1fr 1fr; 
+    gap: 20px;
+}
+.grid-stats h3 {
+    color: pink; 
+    font-size: 0.7rem; 
+    margin-bottom: 5px;
+}
