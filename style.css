@@ -414,44 +414,93 @@ details[open] summary {
     margin-bottom: 5px;
 }
 
-/* --- MOBILE RESPONSIVENESS --- */
+/* --- RESPONSIVE MATRIX ENGINE --- */
 
-/* For Tablets (around 2-3 cards) */
+/* TABLET ADJUSTMENTS */
 @media (max-width: 1024px) {
   .background {
-    grid-template-columns: repeat(3, 1fr);
-    padding: 15px;
+    grid-template-columns: repeat(3, 1fr) !important;
+    padding: 20px;
   }
 }
 
-/* For Phones (1-2 cards max) */
+/* MOBILE ADJUSTMENTS (Phones) */
 @media (max-width: 600px) {
+  /* Fix the Title wrapping */
+  .TopHeader p {
+    font-size: 0.8rem !important;
+    letter-spacing: 1px !important;
+    white-space: nowrap; /* Forces it to stay on one line */
+    text-overflow: ellipsis;
+    overflow: hidden;
+  }
+
+  /* Fix the Navigation Bar */
+  .sub-nav {
+    gap: 10px;
+    padding: 5px;
+    justify-content: flex-start;
+    overflow-x: auto; /* Swipeable tabs */
+  }
+
+  .nav-items {
+    font-size: 0.7rem;
+    padding: 6px 10px;
+  }
+
+  /* Fix the Grid */
   .background {
-    grid-template-columns: repeat(2, 1fr); /* 2 cards side-by-side looks best on phone */
+    grid-template-columns: repeat(2, 1fr) !important;
     gap: 10px;
     padding: 10px;
   }
 
-  .card {
-    height: 220px; /* Shorter cards for small screens */
-  }
-
-  .card-name {
-    font-size: 0.8rem;
-  }
-
-  /* Make the Modal/Popup take up more screen on mobile */
+  /* --- SECTOR (MODAL) MOBILE FIXES --- */
   .info-content {
-    width: 95%;
-    padding: 20px;
-    max-height: 95vh;
+    width: 95% !important;
+    height: 90vh !important;
+    padding: 15px !important;
+    display: flex;
+    flex-direction: column;
   }
-  
+
+  @media (max-width: 600px) {
+  /* 1. Make the header a relative container so we can pin the button inside it */
   .info-header {
-    gap: 15px;
+    display: block !important; /* Switch from flex to block */
+    position: relative !important;
+    padding-top: 10px;
+    min-height: 80px;
   }
-  
+      
+  /* 3. Adjust the Avatar and Name to stay on the left */
+  .info-img {
+    width: 50px !important;
+    height: 50px !important;
+    float: left; /* Keep it on the left */
+    margin-right: 15px;
+  }
+
+  .info-title {
+    padding-top: 5px;
+  }
+
   .info-title h1 {
-    font-size: 1.2rem;
-  }
+    font-size: 1.1rem !important;
+    margin: 0;
+    width: 60%; /* Prevents name from running into the close button */
+   }
+      
+  .close-btn {
+    position: absolute !important;
+    top: 0px !important;
+    right: 0px !important;
+    margin: 0 !important;
+    padding: 5px 10px !important;
+    font-size: 0.7rem !important;
+    width: auto !important;
+        white-space: nowrap !important;
+    z-index: 100;
+    }
 }
+      
